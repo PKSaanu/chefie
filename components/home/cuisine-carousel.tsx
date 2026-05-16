@@ -23,7 +23,7 @@ export function CuisineCarousel({ cuisines }: CuisineCarouselProps) {
       <article className="overflow-hidden rounded-3xl bg-chefie-surface shadow-xl shadow-chefie-primary/15 ring-1 ring-stone-200/60">
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
-            src={current.image_url}
+            src={current.imageUrl}
             alt={current.name}
             fill
             className="object-cover transition-opacity duration-300"
