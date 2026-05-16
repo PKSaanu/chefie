@@ -6,7 +6,7 @@
  *   DATABASE_URL=postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:5432/postgres
  *   SUPABASE_DB_PASSWORD=your_database_password
  */
-import { readFileSync } from "fs";
+import { readFileSync, readdirSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
@@ -102,16 +102,20 @@ async function connectClient() {
   throw lastError ?? new Error("Could not connect to database");
 }
 
-const sql = readFileSync(
-  join(__dirname, "..", "supabase", "migrations", "001_initial_schema.sql"),
-  "utf8"
-);
+const migrationsDir = join(__dirname, "..", "supabase", "migrations");
+const migrationFiles = readdirSync(migrationsDir)
+  .filter((f) => f.endsWith(".sql"))
+  .sort();
 
 const client = await connectClient();
 
 try {
-  console.log(`Applying migration to project: ${projectRef}`);
-  await client.query(sql);
+  console.log(`Applying migrations to project: ${projectRef}`);
+  for (const file of migrationFiles) {
+    console.log(`  → ${file}`);
+    const sql = readFileSync(join(migrationsDir, file), "utf8");
+    await client.query(sql);
+  }
 
   const tables = await client.query(`
     select table_name
