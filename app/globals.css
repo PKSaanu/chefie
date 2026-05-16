@@ -1,26 +1,83 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --chefie-primary: #ff9066;
+  --chefie-primary-dark: #e8784f;
+  --chefie-primary-light: #ffb899;
+  --chefie-accent: #ff6b4a;
+  --chefie-bg: #fff8f4;
+  --chefie-bg-warm: #ffefe6;
+  --chefie-surface: #ffffff;
+  --chefie-text: #1c1917;
+  --chefie-muted: #78716c;
+  --background: var(--chefie-bg);
+  --foreground: var(--chefie-text);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-chefie-primary: var(--chefie-primary);
+  --color-chefie-primary-dark: var(--chefie-primary-dark);
+  --color-chefie-primary-light: var(--chefie-primary-light);
+  --color-chefie-accent: var(--chefie-accent);
+  --color-chefie-bg: var(--chefie-bg);
+  --color-chefie-bg-warm: var(--chefie-bg-warm);
+  --color-chefie-surface: var(--chefie-surface);
+  --color-chefie-muted: var(--chefie-muted);
+  --font-sans: var(--font-jakarta);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+}
+
+body:has(.home-page) {
+  overflow: hidden;
+}
+
+.home-page {
+  background: linear-gradient(
+    165deg,
+    #fffaf7 0%,
+    var(--chefie-bg) 35%,
+    var(--chefie-bg-warm) 100%
+  );
+}
+
+.home-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.home-orb--1 {
+  width: min(420px, 70vw);
+  height: min(420px, 70vw);
+  top: -12%;
+  right: -8%;
+  background: color-mix(in srgb, var(--chefie-primary) 35%, transparent);
+}
+
+.home-orb--2 {
+  width: min(320px, 55vw);
+  height: min(320px, 55vw);
+  bottom: 5%;
+  left: -10%;
+  background: color-mix(in srgb, var(--chefie-accent) 22%, transparent);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--chefie-accent) 0%, var(--chefie-primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
